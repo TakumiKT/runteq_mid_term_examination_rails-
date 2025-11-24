@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="post_<%= @post.id %>">
   <div class="card mb-3">
     <div class="card-header d-flex justify-content-between align-items-center">
       ポスト詳細
@@ -14,16 +14,12 @@
       <% end %>
     </div>
     <div class="card-body">
-      <h2 class="h2">
-        <%= @post.title %>
-      </h2>
+      <h2 class="h2"><%= @post.title %></h2>
       <%= simple_format(@post.body) %>
     </div>
   </div>
   <div class="card mb-3">
-    <div class="card-header">
-      コメント
-    </div>
+    <div class="card-header">コメント</div>
     <div class="card-body">
       <%= form_with model: [@post, @comment] do |f| %>
         <%= render 'shared/error_message', object: f.object %>
@@ -36,9 +32,22 @@
       <hr>
       <div class="p-5">
         <ul class="list-unstyled">
-          <%= render partial: 'posts/comments/comment', collection: @post.comments.order(created_at: :desc) %>
+          <%= render partial: 'posts/comments/comment',
+                     collection: @post.comments.order(created_at: :desc) %>
         </ul>
+      </div>
+      <div class="mt-3">
+        <% if @post.tags.any? %>
+          <p><strong>タグ:</strong></p>
+          <div class="d-flex flex-wrap gap-2">
+            <% @post.tags.each do |tag| %>
+              <%= link_to posts_path(tag_name: tag.name),
+                          class: "badge rounded-pill bg-info text-dark px-3 py-2" do %>
+                <%= tag.name %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-</div>

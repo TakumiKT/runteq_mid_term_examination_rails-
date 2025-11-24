@@ -1,13 +1,20 @@
-<%= form_with model: post do |f| %>
-  <%= render 'shared/error_message', object: f.object %>
+<%= render 'shared/error_message', object: @post %>
+<%= form_with(model: @post, local: true) do |f| %>
   <div class="mb-3">
-    <%= f.label :title %>
+    <%= f.label :title, 'タイトル' %>
     <%= f.text_field :title, class: 'form-control' %>
   </div>
   <div class="mb-3">
-    <%= f.label :body %>
+    <%= f.label :body, '内容' %>
     <%= f.text_area :body, class: 'form-control', rows: 5 %>
   </div>
-
-  <%= f.submit class: 'btn btn-primary'  %>
+  <div class="mb-3">
+    <%= f.label :tag_name, 'タグ' %>
+    <%= f.text_field :tag_name, value: @post.tag_name, class: 'form-control' %>
+  </div>
+  <% if @post.new_record? %>
+    <%= f.submit '登録する', class: 'btn btn-primary' %>
+  <% else %>
+    <%= f.submit '更新する', class: 'btn btn-success' %>
+  <% end %>
 <% end %>

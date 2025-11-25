@@ -1,10 +1,13 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <ul class="list-unstyled">
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      投稿一覧
+    </div>
+    <div class="card-body">
+      <ul>
         <%= render @posts %>
       </ul>
-      <%= paginate @posts %>
+      <%= paginate @posts if @posts.respond_to?(:total_pages) %>
     </div>
   </div>
 </div>
